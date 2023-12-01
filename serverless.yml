@@ -1,4 +1,6 @@
-service: my-store-app
+org: vedjohan
+app: shop-react-redux
+service: js-vx-shop-react-redux-cloudfront
 
 frameworkVersion: "3"
 
@@ -19,7 +21,7 @@ plugins:
 
 custom:
   client:
-    bucketName: my-store-app
+    bucketName: js-vx-shop-react-redux-cloudfront
     distributionFolder: dist
   s3BucketName: ${self:custom.client.bucketName}
 
@@ -36,10 +38,12 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.s3BucketName}
-        AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
         # VersioningConfiguration:
         #   Status: Enabled
 
